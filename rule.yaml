@@ -1,6 +1,18 @@
 tcp-concurrent: true
 
 proxy-groups:
+  - name: 🎮 Pokémon 游戏
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+      - 🇰🇷 韩国节点
+      - 🚀 手动切换
+      - DIRECT
   - name: 🚀 节点选择
     type: select
     proxies:
@@ -184,6 +196,17 @@ proxy-groups:
     tolerance: 50
 
 rules:
+  # === Pokémon 游戏专属规则（最高优先级） ===
+  - DOMAIN-SUFFIX,pokemon.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,pokemongolive.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,pokemon-support.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,pokemonunite.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,nianticlabs.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,niantic.labs.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,nianticwayfarer.com,🎮 Pokémon 游戏
+  - DOMAIN-KEYWORD,pokemon,🎮 Pokémon 游戏
+
+  # === 系统基础直连 ===
   - DOMAIN,dns.msftncsi.com,DIRECT
   - DOMAIN,www.msftncsi.com,DIRECT
   - DOMAIN,www.msftconnecttest.com,DIRECT
@@ -209,6 +232,8 @@ rules:
   - IP-CIDR6,fe80::/10,DIRECT,no-resolve
   - IP-CIDR6,fc00::/7,DIRECT,no-resolve
   - IP-CIDR6,::1/128,DIRECT,no-resolve
+
+  # === GitHub ===
   - PROCESS-NAME,git.exe,🐙 GitHub
   - DOMAIN-SUFFIX,github.com,🐙 GitHub
   - DOMAIN-SUFFIX,github.io,🐙 GitHub
@@ -217,6 +242,8 @@ rules:
   - DOMAIN-SUFFIX,ghcr.io,🐙 GitHub
   - DOMAIN-SUFFIX,github.dev,🐙 GitHub
   - DOMAIN-KEYWORD,github,🐙 GitHub
+
+  # === 广告拦截 ===
   - DOMAIN,ad.com,🛑 广告拦截
   - DOMAIN-KEYWORD,admarvel,🛑 广告拦截
   - DOMAIN-KEYWORD,admaster,🛑 广告拦截
@@ -235,6 +262,8 @@ rules:
   - DOMAIN-KEYWORD,umeng,🛑 广告拦截
   - DOMAIN-SUFFIX,vungle.com,🛑 广告拦截
   - DOMAIN-KEYWORD,zjtoolbar,🛑 广告拦截
+
+  # === AI 服务 ===
   - DOMAIN-SUFFIX,openai.com,💬 AI服务
   - DOMAIN-SUFFIX,chatgpt.com,💬 AI服务
   - DOMAIN-SUFFIX,oaistatic.com,💬 AI服务
@@ -276,6 +305,8 @@ rules:
   - DOMAIN-SUFFIX,suno.ai,💬 AI服务
   - DOMAIN-SUFFIX,cursor.sh,💬 AI服务
   - DOMAIN-SUFFIX,v0.dev,💬 AI服务
+
+  # === 社交与流媒体 ===
   - DOMAIN-SUFFIX,x.com,🐦 推特X
   - DOMAIN-SUFFIX,twitter.com,🐦 推特X
   - DOMAIN-KEYWORD,twitter,🐦 推特X
@@ -341,6 +372,8 @@ rules:
   - DOMAIN-SUFFIX,biliapi.com,📺 哔哩哔哩
   - DOMAIN-SUFFIX,hdslb.com,📺 哔哩哔哩
   - DOMAIN-SUFFIX,b23.tv,📺 哔哩哔哩
+
+  # === 游戏平台 ===
   - DOMAIN-SUFFIX,steam-chat.com,🎮 游戏平台
   - DOMAIN-SUFFIX,steamcontent.com,🎮 游戏平台
   - DOMAIN-SUFFIX,steampowered.com,🎮 游戏平台
@@ -360,6 +393,8 @@ rules:
   - DOMAIN-SUFFIX,battlenet.com,🎮 游戏平台
   - DOMAIN-SUFFIX,blizzard.com,🎮 游戏平台
   - DOMAIN-SUFFIX,riotgames.com,🎮 游戏平台
+
+  # === 苹果与微软服务 ===
   - DOMAIN-SUFFIX,apple.com,🍎 苹果服务
   - DOMAIN-SUFFIX,icloud.com,🍎 苹果服务
   - DOMAIN-SUFFIX,icloud-content.com,🍎 苹果服务
@@ -390,6 +425,8 @@ rules:
   - DOMAIN-SUFFIX,msftauth.net,Ⓜ️ 微软服务
   - DOMAIN-SUFFIX,skype.com,Ⓜ️ 微软服务
   - DOMAIN-KEYWORD,officecdn,Ⓜ️ 微软服务
+
+  # === 常规国外流量 ===
   - DOMAIN-KEYWORD,google,🚀 节点选择
   - DOMAIN-KEYWORD,gmail,🚀 节点选择
   - DOMAIN-KEYWORD,facebook,🚀 节点选择
@@ -438,6 +475,8 @@ rules:
   - DOMAIN-SUFFIX,bit.ly,🚀 节点选择
   - DOMAIN-SUFFIX,akamaized.net,🚀 节点选择
   - DOMAIN-SUFFIX,fastly.net,🚀 节点选择
+
+  # === 国内常规直连 ===
   - DOMAIN-SUFFIX,cn,DIRECT
   - DOMAIN-SUFFIX,中国,DIRECT
   - DOMAIN-SUFFIX,公司,DIRECT
@@ -524,6 +563,8 @@ rules:
   - DOMAIN-SUFFIX,sspai.com,DIRECT
   - DOMAIN-SUFFIX,smzdm.com,DIRECT
   - DOMAIN-SUFFIX,tianyancha.com,DIRECT
+
+  # === 兜底规则 ===
   - GEOSITE,telegram,📲 电报消息
   - GEOSITE,category-ads-all,🛑 广告拦截
   - GEOIP,CN,DIRECT
