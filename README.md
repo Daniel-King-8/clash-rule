@@ -4,5 +4,5 @@
 链接：
 
 ```bush
-https://cdn.jsdelivr.net/gh/Daniel-King-8/clash-rule@main/rule.yaml
+https://cdn.jsdelivr.net/gh/Daniel-King-8/clash-rule@main/rule.yaml?v=1
 ```
