@@ -1,4 +1,8 @@
 tcp-concurrent: true
+ipv6: true
+geodata-mode: true
+geo-auto-update: true
+geo-update-interval: 24
 
 proxy-groups:
   - name: 🎮 Pokémon 游戏
@@ -10,7 +14,6 @@ proxy-groups:
       - 🇺🇸 美国节点
       - 🇨🇳 台湾节点
       - 🇸🇬 狮城节点
-      - 🇰🇷 韩国节点
       - 🚀 手动切换
       - DIRECT
   - name: 🚀 节点选择
@@ -96,7 +99,6 @@ proxy-groups:
   - name: 📺 哔哩哔哩
     type: select
     proxies:
-      - ♻️ 自动选择
       - DIRECT
       - 🇨🇳 台湾节点
       - 🇭🇰 香港节点
@@ -106,13 +108,14 @@ proxy-groups:
       - 🚀 节点选择
       - ♻️ 自动选择
       - 🇺🇸 美国节点
+      - 🇭🇰 香港节点
       - DIRECT
   - name: Ⓜ️ 微软服务
     type: select
     proxies:
-      - ♻️ 自动选择
       - DIRECT
       - 🚀 节点选择
+      - ♻️ 自动选择
       - 🇺🇸 美国节点
   - name: 🍎 苹果服务
     type: select
@@ -124,8 +127,8 @@ proxy-groups:
   - name: 🎮 游戏平台
     type: select
     proxies:
-      - ♻️ 自动选择
       - DIRECT
+      - ♻️ 自动选择
       - 🚀 节点选择
       - 🇭🇰 香港节点
       - 🇯🇵 日本节点
@@ -151,7 +154,7 @@ proxy-groups:
     include-all: true
     filter: "(?i)港|HK|Hong Kong|香港"
     exclude-filter: "(?i)剩余|到期|导航|倍率"
-    url: http://www.gstatic.com/generate_204
+    url: http://cp.cloudflare.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇯🇵 日本节点
@@ -167,7 +170,7 @@ proxy-groups:
     include-all: true
     filter: "(?i)美|US|United States|America"
     exclude-filter: "(?i)剩余|到期|导航|倍率"
-    url: http://www.gstatic.com/generate_204
+    url: http://www.apple.com/library/test/success.html
     interval: 300
     tolerance: 50
   - name: 🇨🇳 台湾节点
@@ -175,7 +178,7 @@ proxy-groups:
     include-all: true
     filter: "(?i)台|TW|Taiwan"
     exclude-filter: "(?i)剩余|到期|导航|倍率"
-    url: http://www.gstatic.com/generate_204
+    url: http://cp.cloudflare.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇸🇬 狮城节点
@@ -197,14 +200,11 @@ proxy-groups:
 
 rules:
   # === Pokémon 游戏专属规则（最高优先级） ===
-  - DOMAIN-SUFFIX,pokemon.com,🎮 Pokémon 游戏
-  - DOMAIN-SUFFIX,pokemongolive.com,🎮 Pokémon 游戏
-  - DOMAIN-SUFFIX,pokemon-support.com,🎮 Pokémon 游戏
-  - DOMAIN-SUFFIX,pokemonunite.com,🎮 Pokémon 游戏
-  - DOMAIN-SUFFIX,nianticlabs.com,🎮 Pokémon 游戏
-  - DOMAIN-SUFFIX,niantic.labs.com,🎮 Pokémon 游戏
-  - DOMAIN-SUFFIX,nianticwayfarer.com,🎮 Pokémon 游戏
   - DOMAIN-KEYWORD,pokemon,🎮 Pokémon 游戏
+  - DOMAIN-KEYWORD,niantic,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,nintendo.com,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,nintendo.net,🎮 Pokémon 游戏
+  - DOMAIN-SUFFIX,shungo.app,🎮 Pokémon 游戏
 
   # === 系统基础直连 ===
   - DOMAIN,dns.msftncsi.com,DIRECT
@@ -244,7 +244,6 @@ rules:
   - DOMAIN-KEYWORD,github,🐙 GitHub
 
   # === 广告拦截 ===
-  - DOMAIN,ad.com,🛑 广告拦截
   - DOMAIN-KEYWORD,admarvel,🛑 广告拦截
   - DOMAIN-KEYWORD,admaster,🛑 广告拦截
   - DOMAIN-KEYWORD,adsage,🛑 广告拦截
@@ -301,12 +300,12 @@ rules:
   - DOMAIN-SUFFIX,x.ai,💬 AI服务
   - DOMAIN-SUFFIX,grok.com,💬 AI服务
   - DOMAIN-SUFFIX,meta.ai,💬 AI服务
-  - DOMAIN-SUFFIX,deepseek.com,💬 AI服务
   - DOMAIN-SUFFIX,suno.ai,💬 AI服务
   - DOMAIN-SUFFIX,cursor.sh,💬 AI服务
   - DOMAIN-SUFFIX,v0.dev,💬 AI服务
+  - DOMAIN-SUFFIX,deepseek.com,DIRECT
 
-  # === 社交与流媒体 ===
+  # === 推特 X ===
   - DOMAIN-SUFFIX,x.com,🐦 推特X
   - DOMAIN-SUFFIX,twitter.com,🐦 推特X
   - DOMAIN-KEYWORD,twitter,🐦 推特X
@@ -321,34 +320,46 @@ rules:
   - DOMAIN,ton.twimg.com,🐦 推特X
   - DOMAIN,caps.twitter.com,🐦 推特X
   - DOMAIN,broadcast.twitter.com,🐦 推特X
+
+  # === Telegram ===
   - DOMAIN-SUFFIX,t.me,📲 电报消息
   - DOMAIN-SUFFIX,telegram.me,📲 电报消息
   - DOMAIN-SUFFIX,telegram.dog,📲 电报消息
   - DOMAIN-SUFFIX,telegra.ph,📲 电报消息
   - DOMAIN-SUFFIX,telegram.org,📲 电报消息
+  - IP-CIDR,91.105.192.0/23,📲 电报消息,no-resolve
   - IP-CIDR,91.108.4.0/22,📲 电报消息,no-resolve
   - IP-CIDR,91.108.8.0/21,📲 电报消息,no-resolve
   - IP-CIDR,91.108.16.0/22,📲 电报消息,no-resolve
   - IP-CIDR,91.108.56.0/22,📲 电报消息,no-resolve
+  - IP-CIDR,95.161.64.0/20,📲 电报消息,no-resolve
   - IP-CIDR,149.154.160.0/20,📲 电报消息,no-resolve
   - IP-CIDR6,2001:67c:4e8::/48,📲 电报消息,no-resolve
   - IP-CIDR6,2001:b28:f23d::/48,📲 电报消息,no-resolve
   - IP-CIDR6,2001:b28:f23f::/48,📲 电报消息,no-resolve
+
+  # === YouTube ===
   - DOMAIN-KEYWORD,youtube,📹 油管视频
   - DOMAIN-SUFFIX,youtu.be,📹 油管视频
   - DOMAIN-SUFFIX,ytimg.com,📹 油管视频
   - DOMAIN-SUFFIX,googlevideo.com,📹 油管视频
   - DOMAIN,youtubei.googleapis.com,📹 油管视频
   - GEOSITE,youtube,📹 油管视频
+
+  # === Netflix ===
   - DOMAIN-SUFFIX,netflix.com,🎥 奈飞视频
   - DOMAIN-SUFFIX,nflximg.net,🎥 奈飞视频
   - DOMAIN-SUFFIX,nflxvideo.net,🎥 奈飞视频
   - DOMAIN-SUFFIX,nflxso.net,🎥 奈飞视频
   - DOMAIN-SUFFIX,nflxext.com,🎥 奈飞视频
   - GEOSITE,netflix,🎥 奈飞视频
+
+  # === Spotify ===
   - DOMAIN-SUFFIX,spotify.com,🎵 Spotify
   - DOMAIN-SUFFIX,scdn.co,🎵 Spotify
   - GEOSITE,spotify,🎵 Spotify
+
+  # === 国外流媒体 ===
   - DOMAIN-SUFFIX,disneyplus.com,🌍 国外媒体
   - DOMAIN-SUFFIX,disney-plus.net,🌍 国外媒体
   - DOMAIN-SUFFIX,dssott.com,🌍 国外媒体
@@ -362,10 +373,13 @@ rules:
   - DOMAIN-SUFFIX,peacocktv.com,🌍 国外媒体
   - DOMAIN-SUFFIX,discoveryplus.com,🌍 国外媒体
   - DOMAIN-SUFFIX,twitch.tv,🌍 国外媒体
+  - DOMAIN-SUFFIX,twitchcdn.net,🌍 国外媒体
   - DOMAIN-SUFFIX,tidal.com,🌍 国外媒体
   - DOMAIN-SUFFIX,deezer.com,🌍 国外媒体
   - DOMAIN-SUFFIX,soundcloud.com,🌍 国外媒体
   - DOMAIN-SUFFIX,sndcdn.com,🌍 国外媒体
+
+  # === 哔哩哔哩 ===
   - DOMAIN-SUFFIX,bilibili.com,📺 哔哩哔哩
   - DOMAIN-SUFFIX,bilivideo.com,📺 哔哩哔哩
   - DOMAIN-SUFFIX,biliapi.net,📺 哔哩哔哩
@@ -373,7 +387,7 @@ rules:
   - DOMAIN-SUFFIX,hdslb.com,📺 哔哩哔哩
   - DOMAIN-SUFFIX,b23.tv,📺 哔哩哔哩
 
-  # === 游戏平台 ===
+  # === 游戏平台（不含任天堂） ===
   - DOMAIN-SUFFIX,steam-chat.com,🎮 游戏平台
   - DOMAIN-SUFFIX,steamcontent.com,🎮 游戏平台
   - DOMAIN-SUFFIX,steampowered.com,🎮 游戏平台
@@ -384,17 +398,22 @@ rules:
   - DOMAIN-SUFFIX,epicgames.com,🎮 游戏平台
   - DOMAIN-SUFFIX,unrealengine.com,🎮 游戏平台
   - DOMAIN-SUFFIX,playstation.com,🎮 游戏平台
-  - DOMAIN-SUFFIX,nintendo.net,🎮 游戏平台
-  - DOMAIN-SUFFIX,nintendo.com,🎮 游戏平台
   - DOMAIN-SUFFIX,xbox.com,🎮 游戏平台
   - DOMAIN-SUFFIX,xboxlive.com,🎮 游戏平台
   - DOMAIN-SUFFIX,ea.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,origin.com,🎮 游戏平台
   - DOMAIN-SUFFIX,ubisoft.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,ubi.com,🎮 游戏平台
   - DOMAIN-SUFFIX,battlenet.com,🎮 游戏平台
   - DOMAIN-SUFFIX,blizzard.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,battle.net,🎮 游戏平台
   - DOMAIN-SUFFIX,riotgames.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,leagueoflegends.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,valorant.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,gog.com,🎮 游戏平台
+  - DOMAIN-SUFFIX,rockstargames.com,🎮 游戏平台
 
-  # === 苹果与微软服务 ===
+  # === 苹果服务 ===
   - DOMAIN-SUFFIX,apple.com,🍎 苹果服务
   - DOMAIN-SUFFIX,icloud.com,🍎 苹果服务
   - DOMAIN-SUFFIX,icloud-content.com,🍎 苹果服务
@@ -405,6 +424,8 @@ rules:
   - DOMAIN-SUFFIX,apple-mapkit.com,🍎 苹果服务
   - DOMAIN-SUFFIX,apple-dns.net,🍎 苹果服务
   - DOMAIN-SUFFIX,aaplimg.com,🍎 苹果服务
+
+  # === 微软服务 ===
   - DOMAIN-SUFFIX,microsoft.com,Ⓜ️ 微软服务
   - DOMAIN-SUFFIX,microsoftonline.com,Ⓜ️ 微软服务
   - DOMAIN-SUFFIX,live.com,Ⓜ️ 微软服务
@@ -426,9 +447,19 @@ rules:
   - DOMAIN-SUFFIX,skype.com,Ⓜ️ 微软服务
   - DOMAIN-KEYWORD,officecdn,Ⓜ️ 微软服务
 
-  # === 常规国外流量 ===
+  # === TikTok 国际版 ===
+  - DOMAIN-KEYWORD,tiktok,🚀 节点选择
+  - DOMAIN-SUFFIX,tiktokv.com,🚀 节点选择
+  - DOMAIN-SUFFIX,byteoversea.com,🚀 节点选择
+  - DOMAIN-SUFFIX,musical.ly,🚀 节点选择
+  - DOMAIN-SUFFIX,tiktokcdn.com,🚀 节点选择
+
+  # === 常规国外服务 ===
   - DOMAIN-KEYWORD,google,🚀 节点选择
   - DOMAIN-KEYWORD,gmail,🚀 节点选择
+  - DOMAIN-SUFFIX,gstatic.com,🚀 节点选择
+  - DOMAIN-SUFFIX,googleapis.com,🚀 节点选择
+  - DOMAIN-SUFFIX,googleusercontent.com,🚀 节点选择
   - DOMAIN-KEYWORD,facebook,🚀 节点选择
   - DOMAIN-SUFFIX,fb.me,🚀 节点选择
   - DOMAIN-SUFFIX,fbcdn.net,🚀 节点选择
@@ -436,6 +467,8 @@ rules:
   - DOMAIN-KEYWORD,whatsapp,🚀 节点选择
   - DOMAIN-SUFFIX,wikipedia.org,🚀 节点选择
   - DOMAIN-SUFFIX,reddit.com,🚀 节点选择
+  - DOMAIN-SUFFIX,redd.it,🚀 节点选择
+  - DOMAIN-SUFFIX,redditstatic.com,🚀 节点选择
   - DOMAIN-SUFFIX,medium.com,🚀 节点选择
   - DOMAIN-SUFFIX,discord.com,🚀 节点选择
   - DOMAIN-SUFFIX,discord.gg,🚀 节点选择
@@ -444,6 +477,7 @@ rules:
   - DOMAIN-SUFFIX,linkedin.com,🚀 节点选择
   - DOMAIN-SUFFIX,licdn.com,🚀 节点选择
   - DOMAIN-SUFFIX,pixiv.net,🚀 节点选择
+  - DOMAIN-SUFFIX,pximg.net,🚀 节点选择
   - DOMAIN-SUFFIX,tumblr.com,🚀 节点选择
   - DOMAIN-SUFFIX,imgur.com,🚀 节点选择
   - DOMAIN-SUFFIX,duckduckgo.com,🚀 节点选择
@@ -451,121 +485,5 @@ rules:
   - DOMAIN-SUFFIX,docker.com,🚀 节点选择
   - DOMAIN-SUFFIX,docker.io,🚀 节点选择
   - DOMAIN-SUFFIX,cloudflare.com,🚀 节点选择
-  - DOMAIN-SUFFIX,cloudfront.net,🚀 节点选择
-  - DOMAIN-SUFFIX,amazonaws.com,🚀 节点选择
-  - DOMAIN-SUFFIX,awsstatic.com,🚀 节点选择
-  - DOMAIN-SUFFIX,stackoverflow.com,🚀 节点选择
-  - DOMAIN-SUFFIX,stackexchange.com,🚀 节点选择
-  - DOMAIN-SUFFIX,vimeo.com,🚀 节点选择
-  - DOMAIN-SUFFIX,pinterest.com,🚀 节点选择
-  - DOMAIN-SUFFIX,nytimes.com,🚀 节点选择
-  - DOMAIN-SUFFIX,wsj.com,🚀 节点选择
-  - DOMAIN-SUFFIX,bbc.com,🚀 节点选择
-  - DOMAIN-SUFFIX,cnn.com,🚀 节点选择
-  - DOMAIN-SUFFIX,theverge.com,🚀 节点选择
-  - DOMAIN-SUFFIX,adobe.com,🚀 节点选择
-  - DOMAIN-SUFFIX,notion.so,🚀 节点选择
-  - DOMAIN-SUFFIX,figma.com,🚀 节点选择
-  - DOMAIN-SUFFIX,dropbox.com,🚀 节点选择
-  - DOMAIN-SUFFIX,box.com,🚀 节点选择
-  - DOMAIN-SUFFIX,gravatar.com,🚀 节点选择
-  - DOMAIN-SUFFIX,gstatic.com,🚀 节点选择
-  - DOMAIN-SUFFIX,googleapis.com,🚀 节点选择
-  - DOMAIN-SUFFIX,yahoo.com,🚀 节点选择
-  - DOMAIN-SUFFIX,bit.ly,🚀 节点选择
-  - DOMAIN-SUFFIX,akamaized.net,🚀 节点选择
-  - DOMAIN-SUFFIX,fastly.net,🚀 节点选择
-
-  # === 国内常规直连 ===
-  - DOMAIN-SUFFIX,cn,DIRECT
-  - DOMAIN-SUFFIX,中国,DIRECT
-  - DOMAIN-SUFFIX,公司,DIRECT
-  - DOMAIN-SUFFIX,网络,DIRECT
-  - DOMAIN-KEYWORD,alicdn,DIRECT
-  - DOMAIN-KEYWORD,alipay,DIRECT
-  - DOMAIN-KEYWORD,taobao,DIRECT
-  - DOMAIN-KEYWORD,baidu,DIRECT
-  - DOMAIN-SUFFIX,qq.com,DIRECT
-  - DOMAIN-SUFFIX,tencent.com,DIRECT
-  - DOMAIN-SUFFIX,weixin.com,DIRECT
-  - DOMAIN-SUFFIX,wechat.com,DIRECT
-  - DOMAIN-SUFFIX,wechatapp.com,DIRECT
-  - DOMAIN-SUFFIX,jd.com,DIRECT
-  - DOMAIN-SUFFIX,360buyimg.com,DIRECT
-  - DOMAIN-SUFFIX,163.com,DIRECT
-  - DOMAIN-SUFFIX,126.com,DIRECT
-  - DOMAIN-SUFFIX,netease.com,DIRECT
-  - DOMAIN-SUFFIX,douyin.com,DIRECT
-  - DOMAIN-SUFFIX,douyinpic.com,DIRECT
-  - DOMAIN-SUFFIX,douyinvod.com,DIRECT
-  - DOMAIN-SUFFIX,iesdouyin.com,DIRECT
-  - DOMAIN-SUFFIX,amemv.com,DIRECT
-  - DOMAIN-SUFFIX,byteimg.com,DIRECT
-  - DOMAIN-SUFFIX,bytecdn.cn,DIRECT
-  - DOMAIN-SUFFIX,volccdn.com,DIRECT
-  - DOMAIN-SUFFIX,snssdk.com,DIRECT
-  - DOMAIN-SUFFIX,feishucdn.com,DIRECT
-  - DOMAIN-SUFFIX,zhihu.com,DIRECT
-  - DOMAIN-SUFFIX,zhimg.com,DIRECT
-  - DOMAIN-SUFFIX,xiaohongshu.com,DIRECT
-  - DOMAIN-SUFFIX,xhscdn.com,DIRECT
-  - DOMAIN-SUFFIX,weibo.com,DIRECT
-  - DOMAIN-SUFFIX,douban.com,DIRECT
-  - DOMAIN-SUFFIX,doubanio.com,DIRECT
-  - DOMAIN-SUFFIX,sohu.com,DIRECT
-  - DOMAIN-SUFFIX,sogou.com,DIRECT
-  - DOMAIN-SUFFIX,sogoucdn.com,DIRECT
-  - DOMAIN-SUFFIX,iqiyi.com,DIRECT
-  - DOMAIN-SUFFIX,qiyipic.com,DIRECT
-  - DOMAIN-SUFFIX,youku.com,DIRECT
-  - DOMAIN-SUFFIX,ykimg.com,DIRECT
-  - DOMAIN-SUFFIX,meituan.com,DIRECT
-  - DOMAIN-SUFFIX,meituan.net,DIRECT
-  - DOMAIN-SUFFIX,ele.me,DIRECT
-  - DOMAIN-SUFFIX,ctrip.com,DIRECT
-  - DOMAIN-SUFFIX,csdn.net,DIRECT
-  - DOMAIN-SUFFIX,mi.com,DIRECT
-  - DOMAIN-SUFFIX,miui.com,DIRECT
-  - DOMAIN-SUFFIX,xiaomicp.com,DIRECT
-  - DOMAIN-SUFFIX,huaweicloud.com,DIRECT
-  - DOMAIN-SUFFIX,hwccpc.com,DIRECT
-  - DOMAIN-SUFFIX,aliyuncs.com,DIRECT
-  - DOMAIN-SUFFIX,alikunlun.com,DIRECT
-  - DOMAIN-SUFFIX,alicdn.com,DIRECT
-  - DOMAIN-SUFFIX,alipayobjects.com,DIRECT
-  - DOMAIN-SUFFIX,mmstat.com,DIRECT
-  - DOMAIN-SUFFIX,qcloud.com,DIRECT
-  - DOMAIN-SUFFIX,qcloudcdn.com,DIRECT
-  - DOMAIN-SUFFIX,myqcloud.com,DIRECT
-  - DOMAIN-SUFFIX,gtimg.cn,DIRECT
-  - DOMAIN-SUFFIX,gtimg.com,DIRECT
-  - DOMAIN-SUFFIX,idqqimg.com,DIRECT
-  - DOMAIN-SUFFIX,bdstatic.com,DIRECT
-  - DOMAIN-SUFFIX,bdimg.com,DIRECT
-  - DOMAIN-SUFFIX,bcebos.com,DIRECT
-  - DOMAIN-SUFFIX,kuaishou.com,DIRECT
-  - DOMAIN-SUFFIX,tmall.com,DIRECT
-  - DOMAIN-SUFFIX,suning.com,DIRECT
-  - DOMAIN-SUFFIX,dianping.com,DIRECT
-  - DOMAIN-SUFFIX,amap.com,DIRECT
-  - DOMAIN-SUFFIX,autonavi.com,DIRECT
-  - DOMAIN-SUFFIX,ximalaya.com,DIRECT
-  - DOMAIN-SUFFIX,xmcdn.com,DIRECT
-  - DOMAIN-SUFFIX,wps.cn,DIRECT
-  - DOMAIN-SUFFIX,wps.com,DIRECT
-  - DOMAIN-SUFFIX,kingsoft.com,DIRECT
-  - DOMAIN-SUFFIX,oschina.net,DIRECT
-  - DOMAIN-SUFFIX,segmentfault.com,DIRECT
-  - DOMAIN-SUFFIX,jianshu.com,DIRECT
-  - DOMAIN-SUFFIX,acfun.tv,DIRECT
-  - DOMAIN-SUFFIX,ifeng.com,DIRECT
-  - DOMAIN-SUFFIX,36kr.com,DIRECT
-  - DOMAIN-SUFFIX,sspai.com,DIRECT
-  - DOMAIN-SUFFIX,smzdm.com,DIRECT
-  - DOMAIN-SUFFIX,tianyancha.com,DIRECT
-
-  # === 兜底规则 ===
-  - GEOSITE,telegram,📲 电报消息
-  - GEOSITE,category-ads-all,🛑 广告拦截
-  - GEOIP,CN,DIRECT
-  - MATCH,🐟 漏网之鱼
+  - DOMAIN-SUFFIX,cloudflareclient.com,🚀 节点选择
+  - DOMAIN-SUFFIX,cloudfront.net,🚀 节
