@@ -486,4 +486,4 @@ rules:
   - DOMAIN-SUFFIX,docker.io,🚀 节点选择
   - DOMAIN-SUFFIX,cloudflare.com,🚀 节点选择
   - DOMAIN-SUFFIX,cloudflareclient.com,🚀 节点选择
-  - DOMAIN-SUFFIX,cloudfront.net,🚀 节
+  - DOMAIN-SUFFIX,cloudfront.net,🚀 节点选择
