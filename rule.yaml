@@ -233,6 +233,17 @@ rules:
   - IP-CIDR6,fc00::/7,DIRECT,no-resolve
   - IP-CIDR6,::1/128,DIRECT,no-resolve
 
+  # === Google Play / Android 软件更新（修复更新一直等待） ===
+  - DOMAIN-SUFFIX,play.google.com,🚀 节点选择
+  - DOMAIN-SUFFIX,play.googleapis.com,🚀 节点选择
+  - DOMAIN,android.clients.google.com,🚀 节点选择
+  - DOMAIN-SUFFIX,googleapis.com,🚀 节点选择
+  - DOMAIN-SUFFIX,gvt1.com,🚀 节点选择
+  - DOMAIN-SUFFIX,gvt2.com,🚀 节点选择
+  - DOMAIN-SUFFIX,gvt3.com,🚀 节点选择
+  - DOMAIN-SUFFIX,googleusercontent.com,🚀 节点选择
+  - DOMAIN-SUFFIX,ggpht.com,🚀 节点选择
+
   # === GitHub ===
   - PROCESS-NAME,git.exe,🐙 GitHub
   - DOMAIN-SUFFIX,github.com,🐙 GitHub
